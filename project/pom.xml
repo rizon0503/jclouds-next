@@ -737,6 +737,7 @@
               <exclude>**/header.txt</exclude>
 
               <!-- high-level project metadata -->
+              <exclude>**/NOTICE</exclude>
               <exclude>**/NOTICE.txt</exclude>
               <exclude>**/DISCLAIMER</exclude>
               <exclude>**/BUILD.txt</exclude>
