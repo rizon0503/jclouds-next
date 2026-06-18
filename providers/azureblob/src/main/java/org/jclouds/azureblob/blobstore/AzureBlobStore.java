@@ -76,7 +76,6 @@ import org.jclouds.io.ContentMetadata;
 import org.jclouds.io.MutableContentMetadata;
 import org.jclouds.io.PayloadSlicer;
 
-import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

@@ -55,7 +55,6 @@ import org.jclouds.domain.Location;
 import org.jclouds.io.PayloadSlicer;
 import org.testng.annotations.Test;
 
-import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
