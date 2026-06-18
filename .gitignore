@@ -1,28 +1,51 @@
 # use glob syntax.
 syntax: glob
+
+# Build output
 target/
 test-output/
 bin/
+dependency-reduced-pom.xml
+
+# IDE — Eclipse
 .settings/
 .classpath
 .project
-.idea/
-*.iml
-*.eml
-*.ipr
-*.iws
-*.DS_STORE
-TAGS
-.metadata/
-atlassian-ide-plugin.xml
-.DS_Store
-.java-version
 .factorypath
 .apt_generated
 .apt_generated_tests
 .checkstyle
+
+# IDE — IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# IDE — VS Code
+.vscode/
+
+# IDE — NetBeans
 nb-configuration.xml
 nbactions.xml
 /.nb-gradle/
-dependency-reduced-pom.xml
-.vscode
+
+# OS
+*.DS_STORE
+.DS_Store
+TAGS
+.metadata/
+
+# Legacy
+atlassian-ide-plugin.xml
+.java-version
+
+# AI assistant tooling
+# Commit: CLAUDE.md, .claude/settings.json, .claude/skills/, docs/skills/
+# Ignore: local auth, per-machine MCP config, AI session state
+.claude/mcp.json
+.claude/todos/
+.cursor/
+.aider*
+.copilot/
+*.aicontext.local

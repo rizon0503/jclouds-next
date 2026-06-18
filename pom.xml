@@ -26,24 +26,17 @@
     <relativePath>project/pom.xml</relativePath>
   </parent>
   <artifactId>jclouds</artifactId>
-  <name>Apache jclouds</name>
+  <name>jclouds-next</name>
   <packaging>pom</packaging>
   <modules>
     <module>project</module>
     <module>resources</module>
     <module>core</module>
-    <module>scriptbuilder</module>
     <module>blobstore</module>
-    <module>compute</module>
-    <module>loadbalancer</module>
     <module>common</module>
     <module>apis</module>
     <module>providers</module>
-    <module>skeletons</module>
     <module>drivers</module>
-    <module>allcompute</module>
     <module>allblobstore</module>
-    <module>allloadbalancer</module>
-    <module>all</module>
   </modules>
 </project>
