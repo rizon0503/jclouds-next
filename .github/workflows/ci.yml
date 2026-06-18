@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  unit-and-integration:
+    name: Unit & Integration tests (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['11']   # bump to '17' once issue #13 is complete
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+
+      - name: Run unit and integration tests
+        # Default mvn test runs two surefire executions:
+        #   1. unit tests (excludes *IntegrationTest, *LiveTest)
+        #   2. integration tests (includes *IntegrationTest, excludes *LiveTest)
+        # Live tests (*LiveTest.java) are excluded here — they need real cloud
+        # credentials and run via the separate live-tests.yml workflow.
+        run: mvn test -B -fae
+        env:
+          MAVEN_OPTS: -Xmx1g
+
+      - name: Upload test reports on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-java${{ matrix.java }}
+          path: '**/target/surefire-reports/'
+          retention-days: 7
