@@ -79,6 +79,7 @@ import org.jclouds.io.PayloadSlicer;
 import com.google.common.base.Function;
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.io.BaseEncoding;
 import com.google.common.primitives.Ints;
@@ -118,18 +119,23 @@ public class AzureBlobStore extends BaseBlobStore {
    }
 
    /**
-    * This implementation invokes {@link AzureBlobClient#listContainers}
+    * This implementation invokes {@link AzureBlobClient#listContainers}, iterating all pages
+    * via the nextMarker to return the complete set of containers.
     */
    @Override
    public PageSet<? extends StorageMetadata> list() {
-      return new Function<BoundedSet<ContainerProperties>, org.jclouds.blobstore.domain.PageSet<? extends StorageMetadata>>() {
-         public org.jclouds.blobstore.domain.PageSet<? extends StorageMetadata> apply(
-                  BoundedSet<ContainerProperties> from) {
-            return new PageSetImpl<StorageMetadata>(Iterables.transform(from, container2ResourceMd), from
-                     .getNextMarker());
+      ImmutableSet.Builder<StorageMetadata> all = ImmutableSet.builder();
+      String marker = null;
+      do {
+         org.jclouds.azure.storage.options.ListOptions options = includeMetadata();
+         if (marker != null) {
+            options.marker(marker);
          }
-         // TODO this may be a list that isn't complete due to 1000 container limit
-      }.apply(sync.listContainers(includeMetadata()));
+         BoundedSet<ContainerProperties> page = sync.listContainers(options);
+         all.addAll(Iterables.transform(page, container2ResourceMd));
+         marker = page.getNextMarker();
+      } while (marker != null);
+      return new PageSetImpl<StorageMetadata>(all.build(), null);
    }
 
    /**
