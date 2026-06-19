@@ -30,6 +30,7 @@
   <packaging>pom</packaging>
   <name>jclouds apis project</name>
   <modules>
+    <module>filesystem</module>
     <module>oauth</module>
     <module>openstack-keystone</module>
     <module>openstack-swift</module>
